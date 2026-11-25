@@ -8,13 +8,13 @@
 :root{--bg:#160e1f;--panel:#21152d;--ink:#f1e9f7;--mute:#b3a3c2;--violet:#a45be0;--rust:#c4562f;--line:#3a2a4d;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#160e1f;--ink:#f1e9f7}}
 :root[data-theme="dark"]{--bg:#160e1f;--ink:#f1e9f7}
-html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+html{scroll-padding-top:calc(72px + env(safe-area-inset-top,0px));scroll-behavior:smooth}
 *,*::before,*::after{box-sizing:inherit}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 "Instrument Sans",system-ui,sans-serif}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--violet);outline-offset:3px}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
-nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:16px;flex-wrap:wrap}
+nav{display:flex;justify-content:space-between;align-items:center;padding:12px 0;gap:16px;flex-wrap:wrap}
 nav b{font:900 22px "Big Shoulders Display",Impact,sans-serif;letter-spacing:.04em}
 nav div{display:flex;gap:22px;flex-wrap:wrap}
 nav a{text-decoration:none;color:var(--mute)}nav a:hover{color:var(--ink)}
@@ -44,14 +44,22 @@ dialog img{max-width:96vw;max-height:92vh;display:block;margin:auto}
 .tools li{position:relative}.tools li::after{content:attr(data-name);position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:5px 10px;font-size:14px;font-weight:600;white-space:nowrap;opacity:0;pointer-events:none;z-index:5}.tools li:hover::after,.tools li:focus-visible::after,.tools li:focus::after{opacity:1}
 .pfp{position:relative;width:250px;height:250px;margin:30px 30px 30px 0}.pfp::before{content:"";position:absolute;inset:-9px;border-radius:50%;background:conic-gradient(from 210deg,var(--violet),var(--rust),var(--violet) 55%,#e8c9ff,var(--violet))}.pfp::after{content:"";position:absolute;inset:-21px;border-radius:50%;border:2px dashed var(--violet);opacity:.8}.pfp img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;box-shadow:0 0 0 5px var(--bg)}
 @media (max-width:820px){.pfp{order:-1;width:180px;height:180px;margin:20px}}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(22,14,31,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:rgba(22,14,31,.95);z-index:19}
+nav a{padding:6px 0;border-bottom:2px solid transparent}
+nav a.active{color:var(--ink);border-bottom-color:var(--violet)}
+.prog{height:3px;width:0;background:linear-gradient(90deg,var(--violet),var(--rust))}
+.totop{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));width:48px;height:48px;border-radius:50%;border:2px solid var(--violet);background:var(--panel);color:var(--ink);display:grid;place-items:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.totop.show{opacity:1;pointer-events:auto}.totop:hover{background:var(--violet)}
+@media (max-width:820px){nav{flex-wrap:nowrap}nav div{flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;gap:18px;scrollbar-width:none}nav div::-webkit-scrollbar{display:none}nav b{flex:none}}
 .contact{text-align:left}
 .contact a.big{font:900 clamp(36px,6vw,80px)/1 "Big Shoulders Display",Impact,sans-serif;text-transform:uppercase;text-decoration:none;border-bottom:4px solid var(--rust)}
 footer{padding:30px 0 50px;color:var(--mute);font-size:14px}
 @media (max-width:820px){.hero{grid-template-columns:1fr}.clips{grid-template-columns:repeat(2,1fr)}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style></head><body>
+<div class="topbar"><div class="wrap"><nav aria-label="Sections"><b>SM</b><div><a href="#showreel">Showreel</a><a href="#film">Film posters</a><a href="#design">GFX Works</a><a href="#boards">Storyboards</a><a href="#edits">Edits</a><a href="#skills">Skills</a><a href="#contact">Contact</a></div></nav></div><div class="prog" id="prog"></div></div>
 <div class="wrap">
-<nav><b>SM</b><div><a href="#film">Film posters</a><a href="#design">Design</a><a href="#boards">Storyboards</a><a href="#edits">Edits</a><a href="#skills">Skills</a><a href="#contact">Contact</a></div></nav>
 <header class="hero">
 <div><h1>Sunvi<br>Madan</h1>
 <p>Visual Artist · Creative Generalist |<br>Design, Video editing &amp; Storytelling</p>
@@ -125,10 +133,18 @@ footer{padding:30px 0 50px;color:var(--mute);font-size:14px}
 <a class="big" href="https://www.linkedin.com/in/sunvi-madan-679443306/" rel="noopener" target="_blank" style="display:inline-block;margin:0 32px 12px 0">LinkedIn</a><a class="big" href="https://www.instagram.com/its_sunv1/" rel="noopener" target="_blank" style="display:inline-block;margin-bottom:12px">Instagram</a></section>
 <footer>&copy; 2026 Sunvi Madan</footer>
 </div>
+<button class="totop" id="totop" type="button" aria-label="Back to top"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 16V4M4 9l6-6 6 6"/></svg></button>
 <dialog id="lb"><img alt=""></dialog>
 <script>
 var lb=document.getElementById('lb'),li=lb.querySelector('img');
 document.querySelectorAll('.cols figure img').forEach(function(i){i.tabIndex=0;function o(){li.src=i.src;li.alt=i.alt;lb.showModal()}i.addEventListener('click',o);i.addEventListener('keydown',function(e){if(e.key==='Enter')o()})});
 lb.addEventListener('click',function(){lb.close()});
 if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){var v=e.target;if(e.isIntersecting){v.preload='auto';v.play().catch(function(){})}else{v.pause()}})},{threshold:.5});document.querySelectorAll('video').forEach(function(v){v.muted=true;v.loop=true;io.observe(v)})}
+
+var links=document.querySelectorAll('nav a'),prog=document.getElementById('prog'),tt=document.getElementById('totop');
+function setActive(id){links.forEach(function(l){var on=l.getAttribute('href')==='#'+id;l.classList.toggle('active',on);if(on&&l.scrollIntoView)l.scrollIntoView({inline:'center',block:'nearest'})})}
+if('IntersectionObserver' in window){var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)setActive(e.target.id)})},{rootMargin:'-35% 0px -60% 0px'});document.querySelectorAll('section[id]').forEach(function(s){so.observe(s)})}
+function onScroll(){var h=document.documentElement,m=h.scrollHeight-h.clientHeight;prog.style.width=(m>0?h.scrollTop/m*100:0)+'%';tt.classList.toggle('show',h.scrollTop>700);if(h.scrollTop<300)links.forEach(function(l){l.classList.remove('active')})}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+tt.addEventListener('click',function(){scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})});
 </script></body></html>
